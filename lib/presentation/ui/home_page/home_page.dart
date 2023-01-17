@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:keiba/presentation/ui/home_page/home_page_utils.dart';
 import 'package:keiba/presentation/ui/home_page/provider/home_page_provider.dart';
 import 'package:keiba/presentation/ui/setting_page/setting_page.dart';
 import 'package:table_calendar/table_calendar.dart';
+
+final kToday = DateTime.now();
+final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
+final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -90,6 +93,8 @@ class BodyWidget extends ConsumerWidget {
         calendarFormat: homePageP.calendarFormat,
         // shouldFillViewport: true, // カレンダーの大きさ変更可
         locale: 'ja_JP',
+        rowHeight: 70,
+        daysOfWeekHeight: 32,
         selectedDayPredicate: (day) {
           return isSameDay(homePageP.selectedDay, day);
         },
@@ -106,19 +111,27 @@ class BodyWidget extends ConsumerWidget {
         onPageChanged: (focusedDay) {
           homePageP.changeFocusedDay(focusedDay);
         },
+        // カスタマイズ用の関数
         calendarBuilders: CalendarBuilders(
-          dowBuilder: (BuildContext context, DateTime day) {
+          dowBuilder: (context, day) {
             // アプリの言語設定読み込み<TableCalendarの中身からコピー>
             final locale = Localizations.localeOf(context).languageCode;
 
             // アプリの言語設定に曜日の文字を対応させる
-            final dowText =
-                const DaysOfWeekStyle().dowTextFormatter?.call(day, locale) ??
-                    DateFormat(locale).format(day);
-            return Center(
-              child: Text(
-                dowText,
-                style: TextStyle(color: _textColor(day)),
+            final dowText = const DaysOfWeekStyle().dowTextFormatter?.call(day, locale) ??
+                DateFormat.E(locale).format(day);
+            return Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.green[600]!,
+                  width: 0.0,
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  dowText,
+                  style: TextStyle(color: _textColor(day)),
+                ),
               ),
             );
           },
@@ -126,6 +139,14 @@ class BodyWidget extends ConsumerWidget {
             return AnimatedContainer(
               duration: const Duration(milliseconds: 250),
               margin: EdgeInsets.zero,
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: Colors.green[600]!,
+                    width: 0.2,
+                  ),
+                ),
+              ),
               alignment: Alignment.topCenter,
               child: Text(
                 day.day.toString(),
@@ -134,11 +155,18 @@ class BodyWidget extends ConsumerWidget {
             );
           },
           // 有効範囲（firstDay~lastDay）以外の日付部分を生成する
-          disabledBuilder:
-              (BuildContext context, DateTime day, DateTime focusedDay) {
+          disabledBuilder: (BuildContext context, DateTime day, DateTime focusedDay) {
             return AnimatedContainer(
               duration: const Duration(milliseconds: 250),
               margin: EdgeInsets.zero,
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: Colors.green[600]!,
+                    width: 0.2,
+                  ),
+                ),
+              ),
               alignment: Alignment.topCenter,
               child: Text(
                 day.day.toString(),
