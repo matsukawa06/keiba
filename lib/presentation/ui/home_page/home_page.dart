@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:keiba/presentation/ui/home_page/home_page_utils.dart';
 import 'package:keiba/presentation/ui/home_page/provider/home_page_provider.dart';
 import 'package:keiba/presentation/ui/setting_page/setting_page.dart';
@@ -105,57 +106,59 @@ class BodyWidget extends ConsumerWidget {
         onPageChanged: (focusedDay) {
           homePageP.changeFocusedDay(focusedDay);
         },
-        // calendarBuilders: CalendarBuilders(
-        //   dowBuilder: (BuildContext context, DateTime day) {
-        //     // アプリの言語設定読み込み<TableCalendarの中身からコピー>
-        //     final locale = Localizations.localeOf(context).languageCode;
+        calendarBuilders: CalendarBuilders(
+          dowBuilder: (BuildContext context, DateTime day) {
+            // アプリの言語設定読み込み<TableCalendarの中身からコピー>
+            final locale = Localizations.localeOf(context).languageCode;
 
-        //     // アプリの言語設定に曜日の文字を対応させる
-        //     final dowText = const DaysOfWeekStyle().dowTextFormatter?.call(day, locale) ??
-        //         DateFormat.E(locale).format(day);
-        //     return Center(
-        //       child: Text(
-        //         dowText,
-        //         // style: TextStyle(color: _textColor(day)),
-        //       ),
-        //     );
-        //   },
-        //   defaultBuilder: (context, day, focusedDay) {
-        //     return AnimatedContainer(
-        //       duration: const Duration(milliseconds: 250),
-        //       margin: EdgeInsets.zero,
-        //       alignment: Alignment.topCenter,
-        //       child: Text(
-        //         day.day.toString(),
-        //         style: TextStyle(color: _textColor(day)),
-        //       ),
-        //     );
-        //   },
-        //   // 有効範囲（firstDay~lastDay）以外の日付部分を生成する
-        //   disabledBuilder: (BuildContext context, DateTime day, DateTime focusedDay) {
-        //     return AnimatedContainer(
-        //       duration: const Duration(milliseconds: 250),
-        //       margin: EdgeInsets.zero,
-        //       alignment: Alignment.topCenter,
-        //       child: Text(
-        //         day.day.toString(),
-        //         style: const TextStyle(color: Colors.grey),
-        //       ),
-        //     );
-        //   },
-        //   selectedBuilder: (context, day, focusedDay) {
-        //     return AnimatedContainer(
-        //       duration: const Duration(milliseconds: 250),
-        //       alignment: Alignment.topCenter,
-        //       child: Text(
-        //         day.day.toString(),
-        //         style: const TextStyle(
-        //           color: Colors.black87,
-        //         ),
-        //       ),
-        //     );
-        //   },
-        // ),
+            // アプリの言語設定に曜日の文字を対応させる
+            final dowText =
+                const DaysOfWeekStyle().dowTextFormatter?.call(day, locale) ??
+                    DateFormat(locale).format(day);
+            return Center(
+              child: Text(
+                dowText,
+                style: TextStyle(color: _textColor(day)),
+              ),
+            );
+          },
+          defaultBuilder: (context, day, focusedDay) {
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              margin: EdgeInsets.zero,
+              alignment: Alignment.topCenter,
+              child: Text(
+                day.day.toString(),
+                style: TextStyle(color: _textColor(day)),
+              ),
+            );
+          },
+          // 有効範囲（firstDay~lastDay）以外の日付部分を生成する
+          disabledBuilder:
+              (BuildContext context, DateTime day, DateTime focusedDay) {
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              margin: EdgeInsets.zero,
+              alignment: Alignment.topCenter,
+              child: Text(
+                day.day.toString(),
+                style: const TextStyle(color: Colors.grey),
+              ),
+            );
+          },
+          selectedBuilder: (context, day, focusedDay) {
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              alignment: Alignment.topCenter,
+              child: Text(
+                day.day.toString(),
+                style: const TextStyle(
+                  color: Colors.black87,
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

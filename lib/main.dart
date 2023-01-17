@@ -21,7 +21,8 @@ Future<void> main() async {
   // flutter_local_notificationsの初期化
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('app_icon');
-  const DarwinInitializationSettings initializationSettingsIOS = DarwinInitializationSettings(
+  const DarwinInitializationSettings initializationSettingsIOS =
+      DarwinInitializationSettings(
     requestAlertPermission: true,
     requestBadgePermission: true,
     requestSoundPermission: true,
