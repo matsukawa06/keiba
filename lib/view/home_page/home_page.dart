@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:keiba/presentation/ui/home_page/provider/home_page_provider.dart';
-import 'package:keiba/presentation/ui/setting_page/setting_page.dart';
+import 'package:keiba/view/home_page/provider/home_page_provider.dart';
+import 'package:keiba/view/setting_page/setting_page.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 final kToday = DateTime.now();
@@ -118,8 +118,9 @@ class BodyWidget extends ConsumerWidget {
             final locale = Localizations.localeOf(context).languageCode;
 
             // アプリの言語設定に曜日の文字を対応させる
-            final dowText = const DaysOfWeekStyle().dowTextFormatter?.call(day, locale) ??
-                DateFormat.E(locale).format(day);
+            final dowText =
+                const DaysOfWeekStyle().dowTextFormatter?.call(day, locale) ??
+                    DateFormat.E(locale).format(day);
             return Container(
               decoration: BoxDecoration(
                 border: Border.all(
@@ -155,7 +156,8 @@ class BodyWidget extends ConsumerWidget {
             );
           },
           // 有効範囲（firstDay~lastDay）以外の日付部分を生成する
-          disabledBuilder: (BuildContext context, DateTime day, DateTime focusedDay) {
+          disabledBuilder:
+              (BuildContext context, DateTime day, DateTime focusedDay) {
             return AnimatedContainer(
               duration: const Duration(milliseconds: 250),
               margin: EdgeInsets.zero,

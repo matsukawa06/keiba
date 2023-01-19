@@ -5,7 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keiba/common/japanese_cuperitino_localizations.dart';
-import 'package:keiba/presentation/ui/calendar_page/calendar_page.dart';
+import 'package:keiba/view/calendar_page/calendar_page.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -21,7 +21,8 @@ Future<void> main() async {
   // flutter_local_notificationsの初期化
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('app_icon');
-  const DarwinInitializationSettings initializationSettingsIOS = DarwinInitializationSettings(
+  const DarwinInitializationSettings initializationSettingsIOS =
+      DarwinInitializationSettings(
     requestAlertPermission: true,
     requestBadgePermission: true,
     requestSoundPermission: true,

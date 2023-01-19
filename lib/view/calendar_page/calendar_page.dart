@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:keiba/presentation/ui/calendar_page/custom_calendar_builders.dart';
-// import 'package:keiba/presentation/ui/home_page/home_page_utils.dart';
-import 'package:keiba/presentation/ui/calendar_page/provider/calendar_page_provider.dart';
-import 'package:keiba/presentation/ui/setting_page/setting_page.dart';
+import 'package:keiba/view/calendar_page/custom_calendar_builders.dart';
+import 'package:keiba/view/calendar_page/provider/calendar_page_provider.dart';
+import 'package:keiba/view/setting_page/setting_page.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 final kToday = DateTime.now();
@@ -29,19 +28,6 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
   const HomeAppBar({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      builder: (context, snapshot) {
-        return AppBar(
-          elevation: 0.0, // 境界線を消す
-          // 右側ボタン（設定画面遷移アイコン）
-          actions: [_settingIcon(context)],
-        );
-      },
-    );
-  }
-
-  @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   ///
@@ -59,6 +45,21 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget {
       icon: const Icon(Icons.settings, size: 25),
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      builder: (context, snapshot) {
+        return AppBar(
+          elevation: 0.0, // 境界線を消す
+          // 右側ボタン（設定画面遷移アイコン）
+          actions: [
+            _settingIcon(context),
+          ],
+        );
+      },
+    );
+  }
 }
 
 ///
@@ -72,10 +73,11 @@ class BodyWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = ref.watch(calendarPageProvider);
-    final CustomCalendarBuilders customCalendarBuilders = CustomCalendarBuilders();
+    final CustomCalendarBuilders customCalendarBuilders =
+        CustomCalendarBuilders();
 
     return SizedBox(
-      child: TableCalendar(
+      child: TableCalendar<dynamic>(
         firstDay: kFirstDay,
         lastDay: kLastDay,
         focusedDay: provider.focusedDay,
