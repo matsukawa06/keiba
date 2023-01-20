@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:keiba/view/calendar_page/custom_calendar_builders.dart';
-import 'package:keiba/view/calendar_page/provider/calendar_page_provider.dart';
-import 'package:keiba/view/setting_page/setting_page.dart';
+import 'package:keiba/view/ui/calendar_page/custom_calendar_builders.dart';
+import 'package:keiba/view/provider/calendar_provider.dart';
+import 'package:keiba/view/ui/setting_page/setting_page.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 final kToday = DateTime.now();
@@ -72,45 +72,50 @@ class BodyWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final provider = ref.watch(calendarPageProvider);
+    final provider = ref.watch(calendarProvider);
     final CustomCalendarBuilders customCalendarBuilders =
         CustomCalendarBuilders();
 
     return SizedBox(
-      child: TableCalendar<dynamic>(
-        firstDay: kFirstDay,
-        lastDay: kLastDay,
-        focusedDay: provider.focusedDay,
-        calendarFormat: provider.calendarFormat,
-        // shouldFillViewport: true, // カレンダーの大きさ変更可
-        locale: 'ja_JP',
-        rowHeight: 70,
-        daysOfWeekHeight: 32,
-        calendarStyle: const CalendarStyle(
-          // true（デフォルト）の場合はtodayBuilderが呼ばれるため設定する
-          isTodayHighlighted: false,
-        ),
-        // カスタマイズ用の関数
-        calendarBuilders: CalendarBuilders(
-          dowBuilder: customCalendarBuilders.daysOfWeekBuilder,
-          defaultBuilder: customCalendarBuilders.defaultBuilder,
-          disabledBuilder: customCalendarBuilders.disabledBuilder,
-          selectedBuilder: customCalendarBuilders.selectedBuilder,
-        ),
-        selectedDayPredicate: (day) {
-          return isSameDay(provider.selectedDay, day);
-        },
-        onDaySelected: (selectedDay, focusedDay) {
-          provider.changeSelectedDay(selectedDay, focusedDay);
-        },
-        onFormatChanged: (format) {
-          if (provider.calendarFormat != format) {
-            provider.changeFormat(format);
-          }
-        },
-        onPageChanged: (focusedDay) {
-          provider.changeFocusedDay(focusedDay);
-        },
+      child: Column(
+        children: [
+          TableCalendar<dynamic>(
+            firstDay: kFirstDay,
+            lastDay: kLastDay,
+            focusedDay: provider.focusedDay,
+            calendarFormat: provider.calendarFormat,
+            // shouldFillViewport: true, // カレンダーの大きさ変更可
+            // locale: 'ja_JP',
+            locale: Localizations.localeOf(context).languageCode,
+            rowHeight: 70,
+            daysOfWeekHeight: 32,
+            calendarStyle: const CalendarStyle(
+              // true（デフォルト）の場合はtodayBuilderが呼ばれるため設定する
+              isTodayHighlighted: false,
+            ),
+            // カスタマイズ用の関数
+            calendarBuilders: CalendarBuilders(
+              dowBuilder: customCalendarBuilders.daysOfWeekBuilder,
+              defaultBuilder: customCalendarBuilders.defaultBuilder,
+              disabledBuilder: customCalendarBuilders.disabledBuilder,
+              selectedBuilder: customCalendarBuilders.selectedBuilder,
+            ),
+            selectedDayPredicate: (day) {
+              return isSameDay(provider.selectedDay, day);
+            },
+            onDaySelected: (selectedDay, focusedDay) {
+              provider.changeSelectedDay(selectedDay, focusedDay);
+            },
+            onFormatChanged: (format) {
+              if (provider.calendarFormat != format) {
+                provider.changeFormat(format);
+              }
+            },
+            onPageChanged: (focusedDay) {
+              provider.changeFocusedDay(focusedDay);
+            },
+          ),
+        ],
       ),
     );
   }

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-final calendarPageProvider = ChangeNotifierProvider(
-  (ref) => CalendarPageProvider(ref),
+final calendarProvider = ChangeNotifierProvider(
+  (ref) => CalendarProvider(ref),
 );
 
-class CalendarPageProvider extends ChangeNotifier {
-  CalendarPageProvider(this.ref);
+class CalendarProvider extends ChangeNotifier {
+  CalendarProvider(this.ref);
   final Ref ref;
 
   CalendarFormat calendarFormat = CalendarFormat.month;

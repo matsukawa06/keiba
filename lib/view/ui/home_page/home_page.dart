@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:keiba/view/home_page/provider/home_page_provider.dart';
-import 'package:keiba/view/setting_page/setting_page.dart';
+import 'package:keiba/view/ui/home_page/provider/home_page_provider.dart';
+import 'package:keiba/view/ui/setting_page/setting_page.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 final kToday = DateTime.now();
