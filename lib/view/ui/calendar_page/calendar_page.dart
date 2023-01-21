@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:keiba/view/ui/calendar_page/custom_calendar_builders.dart';
-import 'package:keiba/view/provider/calendar_provider.dart';
+import 'package:keiba/view/controller/calendar_controller.dart';
 import 'package:keiba/view/ui/setting_page/setting_page.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -72,7 +72,7 @@ class BodyWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final provider = ref.watch(calendarProvider);
+    final provider = ref.watch(calendarController);
     final CustomCalendarBuilders customCalendarBuilders =
         CustomCalendarBuilders();
 
