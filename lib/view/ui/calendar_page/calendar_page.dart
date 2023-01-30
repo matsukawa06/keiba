@@ -72,7 +72,7 @@ class BodyWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final provider = ref.watch(calendarController);
+    final controller = ref.watch(calendarController);
     final CustomCalendarBuilders customCalendarBuilders =
         CustomCalendarBuilders();
 
@@ -82,8 +82,8 @@ class BodyWidget extends ConsumerWidget {
           TableCalendar<dynamic>(
             firstDay: kFirstDay,
             lastDay: kLastDay,
-            focusedDay: provider.focusedDay,
-            calendarFormat: provider.calendarFormat,
+            focusedDay: controller.focusedDay,
+            calendarFormat: controller.calendarFormat,
             // shouldFillViewport: true, // カレンダーの大きさ変更可
             // locale: 'ja_JP',
             locale: Localizations.localeOf(context).languageCode,
@@ -101,18 +101,18 @@ class BodyWidget extends ConsumerWidget {
               selectedBuilder: customCalendarBuilders.selectedBuilder,
             ),
             selectedDayPredicate: (day) {
-              return isSameDay(provider.selectedDay, day);
+              return isSameDay(controller.selectedDay, day);
             },
             onDaySelected: (selectedDay, focusedDay) {
-              provider.changeSelectedDay(selectedDay, focusedDay);
+              controller.changeSelectedDay(selectedDay, focusedDay);
             },
             onFormatChanged: (format) {
-              if (provider.calendarFormat != format) {
-                provider.changeFormat(format);
+              if (controller.calendarFormat != format) {
+                controller.changeFormat(format);
               }
             },
             onPageChanged: (focusedDay) {
-              provider.changeFocusedDay(focusedDay);
+              controller.changeFocusedDay(focusedDay);
             },
           ),
         ],
